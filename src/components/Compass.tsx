@@ -19,7 +19,7 @@ const Compass: React.FC<Props> = ({ direction }) => {
     <div className="compass-wrapper">
       <div
         className="compass-arrow"
-        style={{ transform: `translateY(50%) rotate(${rotation}deg)` }}
+        style={{ transform: `rotate(${rotation}deg)` }}
       />
       <div className="compass-circle" />
     </div>
