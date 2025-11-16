@@ -75,15 +75,20 @@ html, body {
 /* стрелка компаса */
 .compass-arrow {
   position: absolute;
-  width: 8px;
-  height: 100px;
-  background: linear-gradient(to top, #ef4444, #f87171); /* красная стрелка */
-  border-radius: 4px;
-  transform-origin: bottom center;
+  width: 12px;
+  height: 180px;
+  background: linear-gradient(to top, #ef4444, #f87171);
+  border-radius: 6px;
+  transform-origin: bottom center; /* оставить */
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 12px rgba(239,68,68,0.7), 0 2px 6px rgba(0,0,0,0.5);
+  box-shadow: 0 0 16px rgba(239,68,68,0.7), 0 2px 8px rgba(0,0,0,0.5);
   z-index: 2;
+
+  /* исправление смещения: центрируем по вертикали */
+  bottom: 50%;
+  transform: translateY(50%) rotate(var(--rotation, 0deg));
 }
+
 
 /* маленькая отметка на стрелке */
 .compass-arrow::after {
