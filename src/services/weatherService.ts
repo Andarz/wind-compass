@@ -9,7 +9,7 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
 
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
     );
 
     if (!response.ok) {
@@ -18,16 +18,24 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
 
     const data = await response.json();
 
+    if (!data.list || data.list.length === 0) {
+      throw new Error("No forecast data available");
+    }
+
+    // Берём ближайший прогноз (первый элемент массива list)
+    const nearestForecast = data.list[0];
+
     return {
       wind: {
-        speed: data.wind.speed,
-        deg: data.wind.deg
+        speed: nearestForecast.wind.speed,
+        deg: nearestForecast.wind.deg
       },
-      weatherIcon: data.weather[0].icon
+      weatherIcon: nearestForecast.weather[0].icon
     };
   } catch (error) {
-    console.error("Error fetching weather data:", error);
-    throw new Error("Could not fetch weather data. Please try again later.");
+    console.error("Error fetching forecast data:", error);
+    throw new Error("Could not fetch weather forecast. Please try again later.");
   }
 };
+
 
