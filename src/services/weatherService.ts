@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { WeatherData } from '../types';
+import { type WeatherData } from '../types';
 
 export const fetchWeatherData = async (lat: number, lon: number): Promise<WeatherData> => {
   if (!import.meta.env.VITE_API_KEY) {
@@ -40,7 +40,8 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
       },
     });
 
-    const jsonString = response.text.trim();
+    const jsonString = response.text?.trim() ?? "";
+
     const data = JSON.parse(jsonString);
     
     // Basic validation
