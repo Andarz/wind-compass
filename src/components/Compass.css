@@ -1,7 +1,7 @@
 .compass-wrapper {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 374px;   /* было 220px, увеличиваем ~70% */
+  height: 374px;  /* пропорционально */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,24 +10,25 @@
 
 .compass-circle {
   position: absolute;
-  width: 220px;
-  height: 220px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  border: 8px solid #94a3b8;
+  border: 12px solid #94a3b8; /* чуть толще для большего размера */
   background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 70%);
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.1),
-              0 8px 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.1),
+              0 12px 30px rgba(0,0,0,0.5);
 }
+
 
 .compass-arrow {
   position: absolute;
-  width: 8px;
-  height: 100px;
+  width: 12px;               /* чуть шире для пропорций */
+  height: 180px;             /* увеличиваем для нового диаметра */
   background: linear-gradient(to top, #ef4444, #f87171);
-  border-radius: 4px;
-  transform-origin: bottom center;
+  border-radius: 6px;
+  transform-origin: bottom center; /* оставляем, но стрелка теперь длиннее */
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 12px rgba(239,68,68,0.7), 0 2px 6px rgba(0,0,0,0.5);
+  box-shadow: 0 0 16px rgba(239,68,68,0.7), 0 2px 8px rgba(0,0,0,0.5);
   z-index: 2;
 }
 
@@ -39,7 +40,8 @@
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 20px solid #ef4444;
+  border-left: 12px solid transparent;   /* масштабируем под стрелку */
+  border-right: 12px solid transparent;
+  border-bottom: 30px solid #ef4444;
 }
+
