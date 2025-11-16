@@ -33,6 +33,7 @@
   z-index: 2;
 }
 
+/*
 .compass-arrow::after {
   content: '';
   position: absolute;
@@ -45,3 +46,4 @@
   border-right: 12px solid transparent;
   border-bottom: 30px solid #ef4444;
 }
+  */
