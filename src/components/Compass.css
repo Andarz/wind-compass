@@ -32,18 +32,3 @@
   box-shadow: 0 0 16px rgba(239,68,68,0.7), 0 2px 8px rgba(0,0,0,0.5);
   z-index: 2;
 }
-
-/*
-.compass-arrow::after {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 30px solid #ef4444;
-}
-  */
