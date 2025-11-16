@@ -97,7 +97,7 @@ body {
 
 
 /* маленькая отметка на стрелке */
-.compass-arrow::after {
+/*.compass-arrow::after {
   content: '';
   position: absolute;
   bottom: 100%;
@@ -108,7 +108,7 @@ body {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 20px solid #ef4444;
-}
+}*/
 
 /* 3D эффект стрелки */
 .compass-wrapper:hover .compass-arrow {
