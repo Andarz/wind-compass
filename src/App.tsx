@@ -26,7 +26,7 @@ const App: React.FC = () => {
     const handleSuccess = (position: GeolocationPosition) => {
       setLoadingMessage('Fetching wind data...');
       const { latitude, longitude } = position.coords;
-      
+
       fetchWeatherData(latitude, longitude)
         .then(data => {
           setWeather(data);
@@ -34,9 +34,9 @@ const App: React.FC = () => {
         })
         .catch(err => {
           if (err instanceof Error) {
-              setError(err.message);
+            setError(err.message);
           } else {
-              setError("An unknown error occurred.");
+            setError("An unknown error occurred.");
           }
         })
         .finally(() => {
@@ -52,7 +52,7 @@ const App: React.FC = () => {
       setError(message);
       setLoadingMessage('');
     };
-    
+
     // Using an IIFE to handle the async operation inside useEffect's setup
     (async () => {
       try {
@@ -84,23 +84,30 @@ const App: React.FC = () => {
       return <ErrorDisplay message={error} />;
     }
     if (weather) {
+      const speed = weather.wind.speed;
+      const direction = weather.wind.deg;
+
+      const speedClass = speed <= 10.6 ? "wind-green" : "wind-red";
+
       return (
-        <div className="flex flex-col items-center justify-center gap-8 md:gap-12 text-center">
-          <div className="flex flex-col items-center">
-            <span className="text-8xl md:text-9xl font-bold text-white font-mono tracking-tighter">
-              {weather.wind.speed.toFixed(1)}
-            </span>
-            <span className="text-xl md:text-2xl text-slate-400 font-mono">m/s</span>
+        <div className="app-container">
+          <Compass direction={direction} />
+
+          <div className={`wind-speed ${speedClass}`}>
+            {speed.toFixed(1)} м/с
           </div>
-          <Compass direction={weather.wind.deg} />
-          <div className="text-7xl md:text-8xl font-bold text-sky-300 font-mono">
-            {degreesToCardinal(weather.wind.deg)}
+
+          <div className="direction-text">
+            {degreesToCardinal(direction)}
           </div>
         </div>
+
       );
     }
+
     return null;
   };
+
 
   return (
     <main className="bg-slate-900 min-h-screen w-full flex items-center justify-center p-4">

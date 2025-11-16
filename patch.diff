@@ -1,0 +1,149 @@
+diff --git a/src/index.css b/src/index.css
+index e69de29..3b1a7fd 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -0,0 +1,58 @@
++/* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
++
++* {
++  margin: 0;
++  padding: 0;
++  box-sizing: border-box;
++}
++
++html, body {
++  font-family: Arial, sans-serif;
++  height: 100%;
++  background: linear-gradient(135deg, #e8f3ff, #ffffff);
++  color: #222;
++}
++
++#root {
++  height: 100vh;
++  display: flex;
++  justify-content: center;
++  align-items: center;
++}
++
++.app-container {
++  text-align: center;
++  display: flex;
++  flex-direction: column;
++  gap: 26px;
++  padding: 20px;
++}
++
++.wind-speed {
++  font-size: 48px;
++  font-weight: bold;
++}
++
++.wind-green {
++  color: #0a8a0a;
++}
++
++.wind-red {
++  color: #c81414;
++}
++
++
+diff --git a/src/components/Compass.tsx b/src/components/Compass.tsx
+index 1111111..2222222 100644
+--- a/src/components/Compass.tsx
++++ b/src/components/Compass.tsx
+@@ -1,5 +1,58 @@
+-import React from 'react';
+-
+-const Compass = () => {
+-  return <div>Compass</div>;
++import React from "react";
++import "./Compass.css";
++
++type Props = {
++  direction: number; // угол ветра
++};
++
++const Compass: React.FC<Props> = ({ direction }) => {
++  return (
++    <div className="compass-wrapper">
++      <div
++        className="compass-arrow"
++        style={{ transform: `rotate(${direction}deg)` }}
++      />
++      <div className="compass-circle" />
++    </div>
++  );
+ };
+ 
+ export default Compass;
++
++
+diff --git a/src/components/Compass.css b/src/components/Compass.css
+new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/src/components/Compass.css
+@@ -0,0 +1,68 @@
++.compass-wrapper {
++  position: relative;
++  width: 200px;
++  height: 200px;
++  display: flex;
++  justify-content: center;
++  align-items: center;
++}
++
++.compass-circle {
++  position: absolute;
++  width: 200px;
++  height: 200px;
++  border-radius: 50%;
++  border: 6px solid #444;
++}
++
++.compass-arrow {
++  position: absolute;
++  width: 6px;
++  height: 90px;
++  background: red;
++  border-radius: 3px;
++  transform-origin: bottom center;
++  transition: transform 1.2s ease-in-out;
++}
++
++
+diff --git a/src/App.tsx b/src/App.tsx
+index abcdef1..abcdef2 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -1,6 +1,7 @@
+ import React, { useState, useEffect } from 'react';
+ import { fetchWeatherData } from './services/weatherService';
+ import type { WeatherData } from './types';
++import "./index.css";
+ import Compass from './components/Compass';
+ import LoadingSpinner from './components/LoadingSpinner';
+ import ErrorDisplay from './components/ErrorDisplay';
+@@ -42,6 +43,26 @@ const App: React.FC = () => {
+         ))}
+       </div>
+     );
++
++  const direction = weather?.wind.deg ?? 0;
++  const speed = weather?.wind.speed ?? 0;
++
++  const speedClass =
++    speed <= 10.6 ? "wind-green" : "wind-red";
++
++  return (
++    <div className="app-container">
++      <Compass direction={direction} />
++
++      <div className={`wind-speed ${speedClass}`}>
++        {speed.toFixed(1)} м/с
++      </div>
++    </div>
++  );
+ };
+ 
+ export default App;
