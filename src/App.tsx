@@ -17,22 +17,6 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loadingMessage, setLoadingMessage] = useState<string>('Getting your location...');
 
-  useEffect(() => {
-    const testFetch = async () => {
-      try {
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=56.95&lon=24.11&units=metric&appid=${import.meta.env.VITE_OPENWEATHER_KEY}`
-        );
-        const data = await res.json();
-        console.log("Weather test:", data);
-      } catch (err) {
-        console.error("Weather fetch failed:", err);
-      }
-    };
-
-    testFetch();
-  }, []);
-
 
   useEffect(() => {
     if (!navigator.geolocation) {
