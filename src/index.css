@@ -6,10 +6,12 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   font-family: 'Segoe UI', Arial, sans-serif;
   height: 100%;
-  background: linear-gradient(135deg, #0f172a, #1e293b); /* тёмный фон */
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  /* тёмный фон */
   color: #fff;
 }
 
@@ -36,16 +38,18 @@ html, body {
   font-size: 6rem;
   font-weight: bold;
   /*font-family: monospace; */
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: color 0.5s ease;
 }
 
 .wind-green {
-  color: #4ade80; /* ярко-зеленый */
+  color: #4ade80;
+  /* ярко-зеленый */
 }
 
 .wind-red {
-  color: #f87171; /* ярко-красный */
+  color: #f87171;
+  /* ярко-красный */
 }
 
 /* ================= КОМПАС ================= */
@@ -57,7 +61,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* для объёма */
+  perspective: 1000px;
+  /* для объёма */
 }
 
 /* окружность компаса с 3D эффектом */
@@ -68,8 +73,8 @@ html, body {
   border-radius: 50%;
   border: 8px solid #94a3b8;
   background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 70%);
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.1),
-              0 8px 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
+    0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* стрелка компаса */
@@ -79,9 +84,10 @@ html, body {
   height: 180px;
   background: linear-gradient(to top, #ef4444, #f87171);
   border-radius: 6px;
-  transform-origin: bottom center; /* оставить */
+  transform-origin: bottom center;
+  /* оставить */
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 16px rgba(239,68,68,0.7), 0 2px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
   z-index: 2;
 
   /* исправление смещения: центрируем по вертикали */
@@ -113,6 +119,21 @@ html, body {
 .direction-text {
   font-size: 3rem;
   font-weight: bold;
-  color: #38bdf8; /* голубой для направления */
-  text-shadow: 0 0 10px rgba(56,189,248,0.7);
+  color: #38bdf8;
+  /* голубой для направления */
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+}
+
+
+.location-name {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 2.5rem;
+  /* можно подкорректировать */
+  color: #facc15;
+  /* жёлтый */
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  /* отступ до компаса */
 }

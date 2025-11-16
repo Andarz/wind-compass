@@ -91,22 +91,30 @@ const App: React.FC = () => {
 
       return (
         <div className="app-container">
+          {/* Название места */}
+          <div className="location-name">
+            {weather.name}
+          </div>
+
+          {/* Компас */}
           <Compass direction={direction} />
 
+          {/* Скорость ветра */}
           <div className={`wind-speed ${speedClass}`}>
             {speed.toFixed(1)} м/с
           </div>
 
+          {/* Направление ветра */}
           <div className="direction-text">
             {degreesToCardinal(direction)}
           </div>
         </div>
-
       );
     }
 
     return null;
   };
+
 
 
   return (
