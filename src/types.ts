@@ -6,4 +6,7 @@ export interface WindData {
 
 export interface WeatherData {
   wind: WindData;
+  weatherIcon?: string; // для иконки погоды
 }
+
+

@@ -1,34 +1,48 @@
 .compass-wrapper {
   position: relative;
-  width: 374px;
-  height: 374px;
+  width: 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
 }
 
 .compass-circle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  border: 12px solid #94a3b8;
-  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 70%);
-  box-shadow: inset 0 0 30px rgba(255,255,255,0.1),
-              0 12px 30px rgba(0,0,0,0.5);
-  z-index: 1;
+  border: 4px solid #fff;
+  position: relative; /* для абсолютной стрелки и иконки */
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .compass-arrow {
   position: absolute;
-  bottom: 50%;       /* ставим основание стрелки в центр круга */
-  transform-origin: bottom center;
+  bottom: 50%; /* основание стрелки в центре круга */
+  left: 50%;
   width: 12px;
-  height: 180px;
+  height: 140px;
   background: linear-gradient(to top, #ef4444, #f87171);
   border-radius: 6px;
-  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 16px rgba(239,68,68,0.7), 0 2px 8px rgba(0,0,0,0.5);
+  transform-origin: bottom center;
+  transition: transform 0.8s ease;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.7),
+              0 2px 8px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, 50%) rotate(0deg); /* центрирование по основанию */
   z-index: 2;
 }
+
+/* иконка погоды по центру круга */
+.weather-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+

@@ -18,6 +18,23 @@ const App: React.FC = () => {
   const [loadingMessage, setLoadingMessage] = useState<string>('Getting your location...');
 
   useEffect(() => {
+    const testFetch = async () => {
+      try {
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=56.95&lon=24.11&units=metric&appid=${import.meta.env.VITE_OPENWEATHER_KEY}`
+        );
+        const data = await res.json();
+        console.log("Weather test:", data);
+      } catch (err) {
+        console.error("Weather fetch failed:", err);
+      }
+    };
+
+    testFetch();
+  }, []);
+
+
+  useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
       return;
@@ -92,6 +109,15 @@ const App: React.FC = () => {
       return (
         <div className="app-container">
           <Compass direction={direction} />
+
+          {weather.weatherIcon && (
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weatherIcon}@2x.png`}
+              alt="Weather icon"
+              className="weather-icon"
+            />
+          )}
+
 
           <div className={`wind-speed ${speedClass}`}>
             {speed.toFixed(1)} м/с

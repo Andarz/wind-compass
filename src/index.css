@@ -1,5 +1,3 @@
-/* ================= ГЛОБАЛЬНЫЕ СТИЛИ ================= */
-
 * {
   margin: 0;
   padding: 0;
@@ -10,8 +8,7 @@ html,
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   height: 100%;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  /* тёмный фон */
+  background: linear-gradient(135deg, #0f172a, #1e293b); /* тёмный фон */
   color: #fff;
 }
 
@@ -37,44 +34,37 @@ body {
 .wind-speed {
   font-size: 6rem;
   font-weight: bold;
-  /*font-family: monospace; */
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: color 0.5s ease;
 }
 
 .wind-green {
-  color: #4ade80;
-  /* ярко-зеленый */
+  color: #4ade80; /* ярко-зеленый */
 }
 
 .wind-red {
-  color: #f87171;
-  /* ярко-красный */
+  color: #f87171; /* ярко-красный */
 }
 
 /* ================= КОМПАС ================= */
 
 .compass-wrapper {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
-  /* для объёма */
+  perspective: 1000px; /* для объёма */
 }
 
-/* окружность компаса с 3D эффектом */
 .compass-circle {
-  position: absolute;
-  width: 220px;
-  height: 220px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  border: 8px solid #94a3b8;
-  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 70%);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
-    0 8px 20px rgba(0, 0, 0, 0.5);
+  border: 4px solid #fff; /* круг компаса */
+  position: relative; /* важно для абсолютной позиции стрелки и иконки */
+  background: #111; /* фон круга */
 }
 
 /* стрелка компаса */
@@ -85,55 +75,39 @@ body {
   background: linear-gradient(to top, #ef4444, #f87171);
   border-radius: 6px;
   transform-origin: bottom center;
-  /* оставить */
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 0 16px rgba(239, 68, 68, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
   z-index: 2;
-
-  /* исправление смещения: центрируем по вертикали */
-  bottom: 50%;
-  transform: translateY(50%) rotate(var(--rotation, 0deg));
-}
-
-
-/* маленькая отметка на стрелке */
-/*.compass-arrow::after {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 20px solid #ef4444;
-}*/
-
-/* 3D эффект стрелки */
-.compass-wrapper:hover .compass-arrow {
-  transform: rotate(var(--direction, 0deg)) translateZ(5px);
 }
 
 /* ================= НАПРАВЛЕНИЕ ================= */
+
 .direction-text {
   font-size: 3rem;
   font-weight: bold;
-  color: #38bdf8;
-  /* голубой для направления */
+  color: #38bdf8; /* голубой для направления */
   text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
 }
-
 
 .location-name {
   font-family: monospace;
   font-weight: bold;
   font-size: 2.5rem;
-  /* можно подкорректировать */
-  color: #facc15;
-  /* жёлтый */
+  color: #facc15; /* жёлтый */
   text-shadow: 0 0 8px rgba(250, 204, 21, 0.7),
-    0 2px 6px rgba(0, 0, 0, 0.5);
+               0 2px 6px rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
-  /* отступ до компаса */
 }
+
+/* ================= ИКОНИКА ПОГОДЫ ================= */
+
+.weather-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
