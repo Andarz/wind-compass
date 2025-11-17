@@ -19,7 +19,7 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: 6px solid lab(44.62% 66.5 49.99);
+  border: 6px solid lch(100% 0.01 296.81);
   background: hwb(30 73% 26% / 0.784);
   position: relative;
   display: flex;
@@ -28,7 +28,7 @@
   transition: transform 0.5s ease-out;
   box-shadow: 0 4px 10px lab(27.38% 1.27 0.45),
     /* мягкая тень снизу */
-    inset 0 -2px 6px hsl(60, 4%, 26%);
+    inset 0 -2px 6px lab(5.43% -0.2 0.55);
   /* внутренний эффект объёма */
 }
 
