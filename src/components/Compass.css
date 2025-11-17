@@ -19,16 +19,16 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: 8px solid hsl(51, 77%, 82%);
-  background: hsl(30, 87%, 57%);
+  border: 8px solid hwb(0 3% 97%);
+  background: hwb(30 73% 26% / 0.784);
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: transform 0.5s ease-out;
-  box-shadow: 0 4px 10px #f1e092f3,
+  box-shadow: 0 4px 10px hwb(0 100% 0%),
     /* мягкая тень снизу */
-    inset 0 -2px 6px #f8f8f5;
+    inset 0 -2px 6px hsl(60, 4%, 26%);
   /* внутренний эффект объёма */
 }
 
