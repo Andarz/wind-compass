@@ -61,37 +61,29 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
 
   return (
     <div className="compass-wrapper">
+  {/* Статичная иконка погоды */}
+  {weatherIcon && (
+    <img src={iconUrl} alt="Weather icon" className="weather-icon" />
+  )}
 
-      {/* Индикатор дождя */}
-      {pop !== undefined && pop > 0.5 && (
-        <div className="rain-warning">
-          <img src="/umbrella-icon.svg" alt="Umbrella" className="umbrella-icon" />
-          <span>{`${Math.round(pop * 100)}%`}</span>
-        </div>
-      )}
+  {/* Вращающийся круг компаса */}
+  <div
+    className="compass-circle"
+    style={{ transform: `rotate(${-currentHeading.current}deg)` }}
+  >
+    <div className="compass-letter north">N</div>
+    <div className="compass-letter east">E</div>
+    <div className="compass-letter south">S</div>
+    <div className="compass-letter west">W</div>
+  </div>
 
-      <div
-        className="compass-circle"
-        style={{ transform: `rotate(${-currentHeading.current}deg)` }}
-      >
-        {/* Буквы компаса */}
-        <div className="compass-letter north">N</div>
-        <div className="compass-letter east">E</div>
-        <div className="compass-letter south">S</div>
-        <div className="compass-letter west">W</div>
+  {/* Стрелка ветра */}
+  <div
+    className="compass-arrow"
+    style={{ transform: `rotate(${rotation}deg)` }}
+  />
+</div>
 
-        {/* Иконка погоды */}
-        {weatherIcon && (
-          <img src={iconUrl} alt="Weather icon" className="weather-icon" />
-        )}
-      </div>
-
-      {/* Стрелка ветра поверх круга */}
-      <div
-        className="compass-arrow"
-        style={{ transform: `rotate(${rotation}deg)` }}
-      />
-    </div>
   );
 };
 
