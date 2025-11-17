@@ -4,7 +4,7 @@ import "./Compass.css";
 interface CompassProps {
   direction: number;       // направление ветра в градусах
   weatherIcon?: string;    // код иконки погоды OpenWeather
-  pop?: number;            // вероятность осадков
+  pop?: number;            // вероятность осадков (0–100)
 }
 
 const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
@@ -38,7 +38,6 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
       }
     };
 
-    // Для iOS
     if (
       typeof DeviceOrientationEvent !== "undefined" &&
       typeof (DeviceOrientationEvent as any).requestPermission === "function"
@@ -52,7 +51,6 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
         })
         .catch(console.error);
     } else {
-      // Для остальных устройств
       window.addEventListener("deviceorientation", handleOrientation, true);
     }
 
@@ -61,14 +59,14 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
     };
   }, []);
 
-
   return (
     <div className="compass-wrapper">
 
-      {pop && pop > 0.5 && (
+      {/* Индикатор дождя */}
+      {pop && pop > 50 && (
         <div className="rain-warning">
           <img src="/umbrella-icon.svg" alt="Umbrella" className="umbrella-icon" />
-          <span>{`${Math.round(pop * 100)}%`}</span>
+          <span>{`${Math.round(pop)}%`}</span>
         </div>
       )}
 
@@ -98,4 +96,5 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
 };
 
 export default Compass;
+
 
