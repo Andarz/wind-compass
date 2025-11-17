@@ -4,9 +4,10 @@ import "./Compass.css";
 interface CompassProps {
   direction: number;       // направление ветра в градусах
   weatherIcon?: string;    // код иконки погоды OpenWeather
+  pop?: number;            // вероятность осадков
 }
 
-const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
+const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
   const [deviceHeading, setDeviceHeading] = useState(0);
   const currentHeading = useRef(0);
 
@@ -63,6 +64,14 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
 
   return (
     <div className="compass-wrapper">
+
+      {pop && pop > 0.5 && (
+        <div className="rain-warning">
+          <img src="/umbrella-icon.svg" alt="Umbrella" className="umbrella-icon" />
+          <span>{`${Math.round(pop * 100)}%`}</span>
+        </div>
+      )}
+
       <div
         className="compass-circle"
         style={{ transform: `rotate(${-currentHeading.current}deg)` }}

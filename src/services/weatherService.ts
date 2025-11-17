@@ -30,7 +30,8 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
         speed: nearestForecast.wind.speed,
         deg: nearestForecast.wind.deg
       },
-      weatherIcon: nearestForecast.weather[0].icon
+      weatherIcon: nearestForecast.weather[0].icon,
+      pop: nearestForecast.pop ? nearestForecast.pop * 100 : 0 // перевод в проценты
     };
   } catch (error) {
     console.error("Error fetching forecast data:", error);

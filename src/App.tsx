@@ -92,7 +92,12 @@ const App: React.FC = () => {
 
       return (
         <div className="app-container">
-          <Compass direction={direction} />
+          <Compass
+            direction={direction}
+            weatherIcon={weather.weatherIcon}
+            pop={weather.pop}
+          />
+
 
           {weather.weatherIcon && (
             <img
