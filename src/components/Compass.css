@@ -1,3 +1,10 @@
+/* Сброс стилей */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .compass-wrapper {
   position: relative;
   width: 300px;
@@ -5,44 +12,59 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1000px;
 }
 
+/* Круг компаса */
 .compass-circle {
   width: 300px;
   height: 300px;
   border-radius: 50%;
   border: 4px solid #fff;
-  position: relative; /* для абсолютной стрелки и иконки */
   background: #111;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.5s ease-out;
 }
 
+/* Буквы компаса */
+.compass-letter {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+.compass-letter.north { top: 10px; left: 50%; transform: translateX(-50%); }
+.compass-letter.east  { top: 50%; right: 10px; transform: translateY(-50%); }
+.compass-letter.south { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.compass-letter.west  { top: 50%; left: 10px; transform: translateY(-50%); }
+
+/* Стрелка ветра */
 .compass-arrow {
   position: absolute;
-  bottom: 50%; /* основание стрелки в центре круга */
-  left: 50%;
   width: 12px;
   height: 140px;
   background: linear-gradient(to top, #ef4444, #f87171);
   border-radius: 6px;
   transform-origin: bottom center;
-  transition: transform 0.8s ease;
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.7),
-              0 2px 8px rgba(0, 0, 0, 0.5);
-  transform: translate(-50%, 50%) rotate(0deg); /* центрирование по основанию */
-  z-index: 2;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.7), 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+  bottom: 50%;
+  transform: translateY(50%);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* иконка погоды по центру круга */
+/* Иконка погоды */
 .weather-icon {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 240px;
-  height: 240px;
+  width: 100px;
+  height: 100px;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 5;
 }
-

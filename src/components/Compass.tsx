@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Compass.css";
 
 interface CompassProps {
@@ -7,31 +7,83 @@ interface CompassProps {
 }
 
 const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
-  // Поворачиваем стрелку так, чтобы она указывала направление ветра
-  // Ветер "с юга" → стрелка указывает на север
-  const rotation = (direction + 180) % 360;
+  const [deviceHeading, setDeviceHeading] = useState(0);
+  const currentHeading = useRef(0);
 
+  const rotation = direction + 180; // стрелка ветра
   const iconUrl = weatherIcon
     ? `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`
     : "";
 
+  // Плавное вращение круга
+  useEffect(() => {
+    let animationFrame: number;
+
+    const animate = () => {
+      const delta = deviceHeading - currentHeading.current;
+      currentHeading.current += delta * 0.1; // сглаживание
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animate();
+    return () => cancelAnimationFrame(animationFrame);
+  }, [deviceHeading]);
+
+  // Слушаем ориентацию устройства
+  useEffect(() => {
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      if (event.alpha !== null) {
+        setDeviceHeading(event.alpha);
+      }
+    };
+
+    // Для iOS
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof (DeviceOrientationEvent as any).requestPermission === "function"
+    ) {
+      (DeviceOrientationEvent as any)
+        .requestPermission()
+        .then((response: string) => {
+          if (response === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation, true);
+          }
+        })
+        .catch(console.error);
+    } else {
+      // Для остальных устройств
+      window.addEventListener("deviceorientation", handleOrientation, true);
+    }
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleOrientation);
+    };
+  }, []);
+
+
   return (
     <div className="compass-wrapper">
-      <div className="compass-circle">
-        {/* Стрелка ветра */}
-        <div
-          className="compass-arrow"
-          style={{ transform: `rotate(${rotation}deg)` }}
-        />
-        {/* Иконка погоды по центру круга */}
+      <div
+        className="compass-circle"
+        style={{ transform: `rotate(${-currentHeading.current}deg)` }}
+      >
+        {/* Буквы компаса */}
+        <div className="compass-letter north">N</div>
+        <div className="compass-letter east">E</div>
+        <div className="compass-letter south">S</div>
+        <div className="compass-letter west">W</div>
+
+        {/* Иконка погоды */}
         {weatherIcon && (
-          <img
-            src={iconUrl}
-            alt="Weather icon"
-            className="weather-icon"
-          />
+          <img src={iconUrl} alt="Weather icon" className="weather-icon" />
         )}
       </div>
+
+      {/* Стрелка ветра поверх круга */}
+      <div
+        className="compass-arrow"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      />
     </div>
   );
 };
