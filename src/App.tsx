@@ -99,13 +99,13 @@ const App: React.FC = () => {
           />
 
 
-          {weather.weatherIcon && (
+          {/*{weather.weatherIcon && (
             <img
               src={`http://openweathermap.org/img/wn/${weather.weatherIcon}@2x.png`}
               alt="Weather icon"
               className="weather-icon"
             />
-          )}
+          )}*/}
 
 
           <div className={`wind-speed ${speedClass}`}>
