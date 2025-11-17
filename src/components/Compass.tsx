@@ -63,10 +63,10 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
     <div className="compass-wrapper">
 
       {/* Индикатор дождя */}
-      {pop && pop > 50 && (
+      {pop !== undefined && pop > 0.5 && (
         <div className="rain-warning">
           <img src="/umbrella-icon.svg" alt="Umbrella" className="umbrella-icon" />
-          <span>{`${Math.round(pop)}%`}</span>
+          <span>{`${Math.round(pop * 100)}%`}</span>
         </div>
       )}
 

@@ -52,9 +52,9 @@
   transform-origin: bottom center;
   box-shadow: 0 0 16px rgba(239, 68, 68, 0.7), 0 2px 8px rgba(0,0,0,0.5);
   z-index: 10;
-  bottom: 0;
+  bottom: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%, 50%);
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -72,13 +72,16 @@
 /* Индикатор дождя */
 .rain-warning {
   position: absolute;
-  top: -40px;
+  top: -40px; /* немного выше верхней границы круга */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
   color: #00bfff;
   font-weight: bold;
+  z-index: 20; /* выше всех слоев компаса */
 }
 
 .umbrella-icon {
