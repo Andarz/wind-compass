@@ -7,7 +7,7 @@ interface CompassProps {
   pop?: number;            // вероятность осадков (0–100)
 }
 
-const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
+const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
   const [deviceHeading, setDeviceHeading] = useState(0);
   const currentHeading = useRef(0);
 
