@@ -7,7 +7,7 @@ interface CompassProps {
   pop?: number;            // вероятность осадков (0–100)
 }
 
-const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
+const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
   const [deviceHeading, setDeviceHeading] = useState(0);
   const currentHeading = useRef(0);
 
@@ -61,28 +61,37 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon }) => {
 
   return (
     <div className="compass-wrapper">
-  {/* Статичная иконка погоды */}
-  {weatherIcon && (
-    <img src={iconUrl} alt="Weather icon" className="weather-icon" />
-  )}
+      {/* Статичная иконка погоды */}
+      {weatherIcon && (
+        <img src={iconUrl} alt="Weather icon" className="weather-icon" />
+      )}
 
-  {/* Вращающийся круг компаса */}
-  <div
-    className="compass-circle"
-    style={{ transform: `rotate(${-currentHeading.current}deg)` }}
-  >
-    <div className="compass-letter north">N</div>
-    <div className="compass-letter east">E</div>
-    <div className="compass-letter south">S</div>
-    <div className="compass-letter west">W</div>
-  </div>
+      {/* Индикатор дождя */}
+      {pop !== undefined && pop > 50 && (
+        <div className="rain-warning">
+          <img src="/umbrella-icon.svg" alt="Umbrella" className="umbrella-icon" />
+          <span>{`${Math.round(pop)}%`}</span>
+        </div>
+      )}
 
-  {/* Стрелка ветра */}
-  <div
-    className="compass-arrow"
-    style={{ transform: `rotate(${rotation}deg)` }}
-  />
-</div>
+
+      {/* Вращающийся круг компаса */}
+      <div
+        className="compass-circle"
+        style={{ transform: `rotate(${-currentHeading.current}deg)` }}
+      >
+        <div className="compass-letter north">N</div>
+        <div className="compass-letter east">E</div>
+        <div className="compass-letter south">S</div>
+        <div className="compass-letter west">W</div>
+      </div>
+
+      {/* Стрелка ветра */}
+      <div
+        className="compass-arrow"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      />
+    </div>
 
   );
 };
