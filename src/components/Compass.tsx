@@ -10,19 +10,33 @@ interface CompassProps {
 const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
   const [deviceHeading, setDeviceHeading] = useState(0);
   const currentHeading = useRef(0);
+  const headingBuffer = useRef<number[]>([]); // для скользящего среднего
 
   const rotation = direction + 180; // стрелка ветра
   const iconUrl = weatherIcon
     ? `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`
     : "";
 
-  // Плавное вращение круга
+  // Плавное вращение круга компаса
   useEffect(() => {
     let animationFrame: number;
 
     const animate = () => {
-      const delta = deviceHeading - currentHeading.current;
-      currentHeading.current += delta * 0.1; // сглаживание
+      // Добавляем новое значение в буфер
+      headingBuffer.current.push(deviceHeading);
+      if (headingBuffer.current.length > 5) headingBuffer.current.shift(); // берем последние 5 значений
+
+      // Среднее значение
+      const avgHeading = headingBuffer.current.reduce((a, b) => a + b, 0) / headingBuffer.current.length;
+
+      // Разница и нормализация
+      let delta = avgHeading - currentHeading.current;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+
+      // Сглаживание
+      currentHeading.current += delta * 0.07; // коэффициент можно подрегулировать
+
       animationFrame = requestAnimationFrame(animate);
     };
 
@@ -61,10 +75,6 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
 
   return (
     <div className="compass-wrapper">
-      {/* Статичная иконка погоды */}
-      {weatherIcon && (
-        <img src={iconUrl} alt="Weather icon" className="weather-icon" />
-      )}
 
       {/* Индикатор дождя */}
       {pop !== undefined && pop > 50 && (
@@ -74,6 +84,10 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
         </div>
       )}
 
+      {/* Статичная иконка погоды */}
+      {weatherIcon && (
+        <img src={iconUrl} alt="Weather icon" className="weather-icon" />
+      )}
 
       {/* Вращающийся круг компаса */}
       <div
@@ -92,10 +106,7 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
         style={{ transform: `rotate(${rotation}deg)` }}
       />
     </div>
-
   );
 };
 
 export default Compass;
-
-
