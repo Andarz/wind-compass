@@ -46,32 +46,57 @@ const Compass: React.FC<CompassProps> = ({ direction, weatherIcon, pop }) => {
 
   // Слушаем ориентацию устройства
   useEffect(() => {
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      if (event.alpha !== null) {
-        setDeviceHeading(event.alpha);
-      }
-    };
+  const handleOrientation = (event: DeviceOrientationEvent) => {
+    let heading: number | null = null;
 
-    if (
-      typeof DeviceOrientationEvent !== "undefined" &&
-      typeof (DeviceOrientationEvent as any).requestPermission === "function"
-    ) {
-      (DeviceOrientationEvent as any)
-        .requestPermission()
-        .then((response: string) => {
-          if (response === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation, true);
-          }
-        })
-        .catch(console.error);
-    } else {
-      window.addEventListener("deviceorientation", handleOrientation, true);
+    // iOS Safari
+    if ((event as any).webkitCompassHeading !== undefined) {
+      heading = (event as any).webkitCompassHeading; // градусы, 0 = север
+    }
+    // Android / современные браузеры
+    else if (event.absolute && event.alpha !== null) {
+      heading = 360 - event.alpha; // корректировка направления
     }
 
-    return () => {
-      window.removeEventListener("deviceorientation", handleOrientation);
-    };
-  }, []);
+    if (heading !== null) {
+      // сглаживание поворота круга
+      setDeviceHeading((prev) => {
+        let delta = heading! - prev;
+
+        // минимизируем прыжки через 0°
+        if (delta > 180) delta -= 360;
+        if (delta < -180) delta += 360;
+
+        return prev + delta * 0.1;
+      });
+    }
+  };
+
+  // Запрос разрешения на iOS 13+
+  if (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof (DeviceOrientationEvent as any).requestPermission === "function"
+  ) {
+    (DeviceOrientationEvent as any)
+      .requestPermission()
+      .then((response: string) => {
+        if (response === "granted") {
+          window.addEventListener("deviceorientation", handleOrientation, true);
+        }
+      })
+      .catch(console.error);
+  } else {
+    // Остальные устройства
+    window.addEventListener("deviceorientationabsolute", handleOrientation, true);
+    window.addEventListener("deviceorientation", handleOrientation, true);
+  }
+
+  return () => {
+    window.removeEventListener("deviceorientationabsolute", handleOrientation);
+    window.removeEventListener("deviceorientation", handleOrientation);
+  };
+}, []);
+
 
   return (
     <div className="compass-wrapper">
