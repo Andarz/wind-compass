@@ -95,7 +95,7 @@
 /* Индикатор дождя */
 .rain-warning {
   position: absolute;
-  top: -40px;
+  top: -80px;
   /* немного выше верхней границы круга */
   left: 50%;
   transform: translateX(-50%);
